@@ -4,43 +4,67 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class NextActivity extends AppCompatActivity {
-//Shift + Alt + Mouse Click
+
+   TextView tvTimer;
+   int seconds = 0;
+   boolean running = false;
+
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_main2);
-      Log.i("LearningLifecycle", "NextActivity: Inside onCreate.");
+
+      findViewById(R.id.btnStart).setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+            startTimer();
+         }
+      });
+
+      findViewById(R.id.btnStop).setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+            stopTimer();
+         }
+      });
+
+      findViewById(R.id.btnReset).setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+            resetTimer();
+         }
+      });
+
+      tvTimer = findViewById(R.id.tvTime);
+
+      createTimer();
    }
 
-   @Override
-   protected void onStart() {
-      super.onStart();
-      Log.i("LearningLifecycle", "NextActivity: Inside onStart.");
+   private void createTimer() {
+      tvTimer.setText(String.valueOf(seconds));
    }
 
-   @Override
-   protected void onResume() {
-      super.onResume();
-      Log.i("LearningLifecycle", "NextActivity: Inside onResume.");
+   private void startTimer() {
+      running = true;
+      seconds++;
+      tvTimer.setText(String.valueOf(seconds));
    }
 
-   @Override
-   protected void onPause() {
-      super.onPause();
-      Log.i("LearningLifecycle", "NextActivity: Inside onPause.");
+   private void stopTimer() {
+      running = false;
+      seconds--;
+      tvTimer.setText(String.valueOf(seconds));
    }
 
-   @Override
-   protected void onStop() {
-      super.onStop();
-      Log.i("LearningLifecycle", "NextActivity: Inside onStop.");
+   private void resetTimer() {
+      running = false;
+      seconds = 0;
+      tvTimer.setText(String.valueOf(seconds));
    }
 
-   @Override
-   protected void onDestroy() {
-      super.onDestroy();
-      Log.i("LearningLifecycle", "NextActivity: Inside onDestroy.");
-   }
 }
